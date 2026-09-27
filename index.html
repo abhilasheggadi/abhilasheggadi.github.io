@@ -907,66 +907,66 @@
         <div class="chk-card">
           <div>
             <div class="chk-num">CHECKPOINT 01</div>
-            <div class="chk-name">Schema &amp; Migration Drift</div>
-            <div class="chk-desc">AI tools generate code referencing columns or tables that were never migrated to the live production database. Works locally, breaks on real user queries.</div>
+            <div class="chk-name">Ghost Columns &amp; Silent Crashes</div>
+            <div class="chk-desc"><strong>The Risk:</strong> Your app deploys cleanly, but crashes when real users sign up because the database is missing a column the AI assumed was already there.</div>
           </div>
           <div class="chk-incident">
-            <strong>Real Incident:</strong> Production outage on lumbox.co after an AI tool skipped live table migrations.
+            <strong>Technical Root:</strong> Schema &amp; migration drift between dev code and live production database tables.
           </div>
         </div>
 
         <div class="chk-card">
           <div>
             <div class="chk-num">CHECKPOINT 02</div>
-            <div class="chk-name">Rules Only in Prompts</div>
-            <div class="chk-desc">Security constraints, tier limits, or validation checks described in prompt text rather than validated in backend code. Prompts are requests, not barriers.</div>
+            <div class="chk-name">Unenforced Rules &amp; Leaked Tiers</div>
+            <div class="chk-desc"><strong>The Risk:</strong> You told the AI "only pro users can see this," but anyone who inspects network requests or types the direct URL can bypass the paywall.</div>
           </div>
           <div class="chk-incident">
-            <strong>Real Incident:</strong> Unenforced user role boundaries bypassed simply by prompting the system differently.
+            <strong>Technical Root:</strong> Business constraints described only as English text in prompts, never asserted in backend code.
           </div>
         </div>
 
         <div class="chk-card">
           <div>
             <div class="chk-num">CHECKPOINT 03</div>
-            <div class="chk-name">Timezone &amp; Boundary Logic</div>
-            <div class="chk-desc">Comparing dates at 24-hour day granularity or in UTC, causing premature billing cutoffs or booking conflicts near midnight boundaries.</div>
+            <div class="chk-name">Midnight &amp; Timezone Billing Glitches</div>
+            <div class="chk-desc"><strong>The Risk:</strong> Your app prematurely cancels active bookings, closes stores, or charges users mid-day because the server calculates dates in UTC instead of user local time.</div>
           </div>
           <div class="chk-incident">
-            <strong>Real Incident:</strong> Silent booking cancellation bug that charged active users mid-day due to UTC offset.
+            <strong>Technical Root:</strong> Date comparisons evaluated at 24-hour day granularity without timezone offsets.
           </div>
         </div>
 
         <div class="chk-card">
           <div>
             <div class="chk-num">CHECKPOINT 04</div>
-            <div class="chk-name">Multi-Tenant Isolation</div>
-            <div class="chk-desc">Missing Row Level Security (RLS) or permissive database rules that allow any authenticated user to view or modify other tenants' data.</div>
+            <div class="chk-name">Account Bleed &amp; Cross-User Snooping</div>
+            <div class="chk-desc"><strong>The Risk:</strong> User A logs in and can view, modify, or download User B's private orders, phone numbers, or uploaded documents simply by changing an ID.</div>
           </div>
           <div class="chk-incident">
-            <strong>Real Incident:</strong> Global Firestore rule granting read/write access to any logged-in user across all orders.
+            <strong>Technical Root:</strong> Missing database Row Level Security (RLS) or trusting client-supplied user IDs without ownership verification.
           </div>
         </div>
 
         <div class="chk-card">
           <div>
             <div class="chk-num">CHECKPOINT 05</div>
-            <div class="chk-name">Idempotency &amp; Duplicate Writes</div>
-            <div class="chk-desc">Endpoints lacking unique constraint checks or idempotency keys, leading to duplicate charges when users double-click or webhooks retry.</div>
+            <div class="chk-name">Double Charges &amp; Duplicate Bookings</div>
+            <div class="chk-desc"><strong>The Risk:</strong> A customer double-clicks "Submit" or a Stripe payment webhook retries on slow WiFi, creating duplicate records and charging their card twice.</div>
           </div>
           <div class="chk-incident">
-            <strong>Real Incident:</strong> Stripe payment webhook retried on latency spike, charging subscription customers twice.
+            <strong>Technical Root:</strong> Endpoints missing database unique constraints or transaction idempotency keys.
           </div>
         </div>
 
         <div class="chk-card">
           <div>
             <div class="chk-num">CHECKPOINT 06</div>
-            <div class="chk-name">Hallucinated Dependencies</div>
-            <div class="chk-desc">Imports of deprecated methods, phantom npm packages, or un-isolated third-party API loops that quietly drain monthly hosting credits.</div>
+            <div class="chk-name">Surprise 10x Overnight Hosting Bills</div>
+            <div class="chk-desc"><strong>The Risk:</strong> A search crawler or un-isolated background loop repeatedly fires external AI API calls, quietly draining your monthly Vercel or OpenAI credits in hours.</div>
           </div>
           <div class="chk-incident">
-            <strong>Real Incident:</strong> Uncaught recursive preview link crawl resulting in a 10x overnight Vercel billing spike.
+            <strong>Technical Root:</strong> Un-cached recursive loops, deprecated SDK imports, or unhandled third-party webhook storms.
           </div>
         </div>
       </div>
